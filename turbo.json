@@ -2,6 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "globalDependencies": ["**/.env.*local"],
+  "globalEnv": ["NEXT_PUBLIC_BACKEND_URL", "BLANK_ENV_VAR"],
   "tasks": {
     "dev": {
       "cache": false,

@@ -1,6 +1,6 @@
-import { render } from '@testing-library/react';
+import { render } from "@testing-library/react";
 
-import RootPage from '../app/page';
+import RootPage from "../src/app/page";
 
 window.fetch = jest.fn().mockImplementation(() =>
   Promise.resolve({
@@ -9,16 +9,16 @@ window.fetch = jest.fn().mockImplementation(() =>
   }),
 );
 
-describe('Root page', () => {
+describe("Root page", () => {
   const { container, unmount } = render(
     <RootPage params={{ forTest: true }} />,
   );
 
-  it('should match the snapshot', () => {
+  it("should match the snapshot", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('should have the correct tree parent', () => {
+  it("should have the correct tree parent", () => {
     expect(container).toBeInstanceOf(HTMLDivElement);
   });
 
