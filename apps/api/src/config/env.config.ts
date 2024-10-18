@@ -8,6 +8,7 @@ import { fromZodError } from "zod-validation-error";
  */
 export const envSchema = z.object({
   FRONTEND_URL: z.string(),
+  PORT: z.coerce.number().optional(),
 });
 
 /**
