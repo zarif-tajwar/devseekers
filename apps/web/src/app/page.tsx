@@ -1,9 +1,12 @@
-import { env } from "@/env";
-import React from "react";
+import { Button } from "@repo/ui/components/core/button";
 
 const RootPage = () => {
-  env.NEXT_PUBLIC_BACKEND_URL;
-  return <div>RootPage</div>;
+  return (
+    <div>
+      RootPage
+      <Button className="bg-blue-500">Click Me</Button>
+    </div>
+  );
 };
 
 export default RootPage;
