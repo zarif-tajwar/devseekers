@@ -78,3 +78,7 @@ Devseekers monorepo has the following structure :
 ## Useful CLI Commands
 
 [**Click here**](./docs/USEFUL_CLI_COMMANDS.md) to see them.
+
+## Usage Examples
+
+- [**Frontend Usage Examples**](./docs/examples/FRONTEND_USAGE_EXAMPLES.md).

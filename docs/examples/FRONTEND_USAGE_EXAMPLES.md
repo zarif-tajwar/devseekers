@@ -89,19 +89,6 @@ NEW_ENV_VAR=abc
 
 2. Register it in your Next.js app's `src/env.ts` file. All **env.ts** files: [`frontend`](./apps/frontend/src/env.ts), [`admin-frontend`](./apps/admin-frontend/src/env.ts).
 
-# Frontend Usage Examples
-
-## Table of contents
-
-<ul>
-    <li>
-      <a href="#create-a-shareable-ui-component-in-repoui">Create a shareable UI component in @repo/ui</a>
-    </li>
-    <li><a href="#use-shadcn-cli-to-add-components-in-repoui">Use shadcn CLI to add components in @repo/ui</a></li>
-    <li><a href="#create-a-shareable-zod-validator-in-reposhared-lib">Create a shareable zod validator in @repo/shared-lib</a></li>
-    <li><a href="#add-and-use-environment-variables-in-nextjs-apps-with-typesafety">Add and use environment variables in Next.js apps with typesafety</a></li>
-</ul>
-
 <br/>
 
 ### Create a shareable UI component in @repo/ui
