@@ -17,7 +17,7 @@
 
 ---
 
-1.  Create the react component inside [`packages\ui\src\components`](./packages/ui/src/components) folder and export it.
+1.  Create the react component inside [`packages\ui\src\components`](../../packages/ui/src/components) folder and export it.
     <br/>
     **Example:**
 
@@ -36,7 +36,7 @@ export { Badge };
    **Example:**
 
 ```tsx
-# apps\frontend\src\app\page.tsx
+// apps\frontend\src\app\page.tsx
 
 import { Badge } from "@repo/ui/components/badge";
 
@@ -48,7 +48,6 @@ const Page = () => {
     </div>
   );
 };
-
 ```
 
 <br/>
@@ -75,9 +74,11 @@ pnpm shadcn add <name_of_the_component>
 > [!IMPORTANT]
 > Make sure @repo/shared-lib dev server is running while you're actively developing inside the package
 
-**Follow the same pattern as [this example](#use-shadcn-cli-to-add-components-in-repoui).**
+**Follow the same pattern as [this example](#create-a-shareable-zod-validator-in-reposhared-lib).**
 
 ### Add and use environment variables in Next.js apps with typesafety
+
+---
 
 1. At first, add your env var in .env file.
 
@@ -114,7 +115,7 @@ export { Badge };
    **Example:**
 
 ```tsx
-# apps\frontend\src\app\page.tsx
+// apps\frontend\src\app\page.tsx
 
 import { Badge } from "@repo/ui/components/badge";
 
@@ -126,7 +127,6 @@ const Page = () => {
     </div>
   );
 };
-
 ```
 
 <br/>
