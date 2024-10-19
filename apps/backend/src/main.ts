@@ -9,6 +9,14 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
+  const FRONTEND_URL = getEnvValue(configService, "FRONTEND_URL");
+  const ADMIN_FRONTEND_URL = getEnvValue(configService, "ADMIN_FRONTEND_URL");
+
+  app.enableCors({
+    origin: [FRONTEND_URL, ADMIN_FRONTEND_URL],
+    credentials: true,
+  });
+
   const PORT = getEnvValue(configService, "PORT") || 3000;
 
   app.useGlobalFilters(new ZodFilter());
