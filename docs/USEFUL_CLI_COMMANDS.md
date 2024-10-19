@@ -73,7 +73,7 @@ turbo dev -F !frontend # Notice the exclamation mark
 
 ---
 
-To do what the heading says, executing a command like this :
+To do what the heading says, execute a command like this :
 
 ```sh
 pnpm -F <name_of_the_app_or_package> add <name_of_the_target_package>
