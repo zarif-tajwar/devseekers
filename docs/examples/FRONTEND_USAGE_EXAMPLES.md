@@ -131,31 +131,9 @@ const Page = () => {
 
 <br/>
 
-### Use shadcn CLI to add components in @repo/ui
-
----
-
-You can use shadcn cli from the root directory add it's components in @repo/ui :
-
-From the root directory execute a command like this:
-
-```sh
-pnpm shadcn add <name_of_the_component>
-# Example: pnpm shadcn add button
-```
-
-<br/>
-
-### Create a shareable zod validator in @repo/shared-lib
-
----
-
-> [!IMPORTANT]
-> Make sure @repo/shared-lib dev server is running while you're actively developing inside the package
-
-**Follow the same pattern as [this example](#use-shadcn-cli-to-add-components-in-repoui).**
-
 ### Add and use environment variables in Next.js apps with typesafety
+
+---
 
 1. At first, add your env var in .env file.
 
