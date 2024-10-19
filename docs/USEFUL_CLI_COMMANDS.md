@@ -13,6 +13,8 @@
     <li><a href="#install-dependencies-of-a-specific-app-or-package-from-the-root directory">Install dependencies of a specific app or package from the root directory</a></li>
 </ul>
 
+<br/>
+
 ### Run the dev server of a specific app
 
 ---
@@ -39,6 +41,8 @@ turbo dev -F admin-frontend
 
 `build`, `start` and `lint` script behaves in the same way.
 
+<br/>
+
 ### Ignore a specific app and run all other apps
 
 ---
@@ -62,6 +66,8 @@ or
 
 turbo dev -F !frontend # Notice the exclamation mark
 ```
+
+<br/>
 
 ### Install dependencies of a specific app or package from the root directory
 

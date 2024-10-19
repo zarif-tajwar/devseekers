@@ -51,7 +51,7 @@ Follow the steps below to setup this project.
   pnpm i
   ```
 
-- Rename all `.env.example` files to `.env`. Here are all **.env.example** files: [`frontend`](./apps/frontend/.env.example), [`admin-frontend`](./apps/admin-frontend/.env.example), [`backend`](./apps/backend/.env.example),
+- Rename all `.env.example` files to `.env`. Here are all **.env.example** files: [`frontend`](./apps/frontend/.env.example), [`admin-frontend`](./apps/admin-frontend/.env.example), [`backend`](./apps/backend/.env.example).
 
 - Run the development server :
 
