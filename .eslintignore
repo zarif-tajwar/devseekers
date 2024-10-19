@@ -1,4 +1,6 @@
-tailwind.config.ts
-postcss.config.js
-tsup.config.ts
-next.config.mjs
+**/tailwind.config.ts
+**/postcss.config.js
+**/tsup.config.ts
+**/next.config.mjs
+**/.eslintrc.js
+**/.prettierrc.js
