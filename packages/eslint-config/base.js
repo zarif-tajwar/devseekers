@@ -3,6 +3,7 @@ module.exports = {
   root: true,
   extends: [
     "plugin:@typescript-eslint/recommended",
+    "next/core-web-vitals",
     "plugin:prettier/recommended",
     "prettier",
     "turbo",
