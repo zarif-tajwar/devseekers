@@ -18,4 +18,12 @@ module.exports = {
     "coverage/",
     "node_modules/",
   ],
+  rules: {
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "off",
+      },
+    ],
+  },
 };
