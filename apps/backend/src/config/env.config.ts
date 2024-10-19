@@ -1,16 +1,7 @@
 import { ConfigService, registerAs } from "@nestjs/config";
+import { envSchema } from "src/env";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
-
-/**
- * Zod schema for validating env vars
- * NOTE: All env vars must be registered inside this object!!
- */
-export const envSchema = z.object({
-  FRONTEND_URL: z.string().url(),
-  PORT: z.coerce.number().optional(),
-  ADMIN_FRONTEND_URL: z.string().url(),
-});
 
 /**
  * Loads the env vars from envSchema and validates them
