@@ -6,7 +6,8 @@
     "prepare": "tsup",
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "typecheck": "tsc --noEmit"
   },
   "files": [
     "./dist/**"
