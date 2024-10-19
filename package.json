@@ -12,11 +12,15 @@
     "test:e2e": "turbo test:e2e",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md,js,mjs,cjs}\"",
-    "shadcn": "pnpm --filter @repo/ui shadcn"
+    "shadcn": "pnpm --filter @repo/ui shadcn",
+    "prepare": "husky",
+    "pre-commit": "lint-staged"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "prettier": "^3.2.5",
     "turbo": "^2.1.3"
   },
