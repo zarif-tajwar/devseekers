@@ -1,5 +1,7 @@
 # Devseekers
 
+## Table of contents
+
 <strong>
 <ol>
     <li>
@@ -10,6 +12,7 @@
       </ul>
     </li>
     <li><a href="#project-structure">Project Structure</a></li>
+    <li><a href="#useful-commands">Useful CLI Commands</a></li>
 
 </ol>
 </strong>
@@ -71,3 +74,7 @@ Devseekers monorepo has the following structure :
         ├── @repo/typescript-config  # tsconfigs
         ├── @repo/eslint-config      # eslint, prettier configs
         └── @repo/jest-config        # jest configs
+
+## Useful CLI Commands
+
+[**Click here**](./docs/USEFUL_CLI_COMMANDS.md) to see them.
