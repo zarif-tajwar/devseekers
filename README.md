@@ -83,3 +83,4 @@ Devseekers monorepo has the following structure :
 ## Usage Examples
 
 - [**Frontend Usage Examples**](./docs/examples/FRONTEND_USAGE_EXAMPLES.md).
+- [**Backend Usage Examples**](./docs/examples/BACKEND_USAGE_EXAMPLES.md).
