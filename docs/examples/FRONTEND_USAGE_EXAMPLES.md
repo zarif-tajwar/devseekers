@@ -147,7 +147,7 @@ NEW_ENV_VAR=abc
 NEXT_PUBLIC_NEW_ENV_VAR=abc
 ```
 
-2. Register it in your Next.js app's `src/env.ts` file. All **env.ts** files: [`frontend`](./apps/frontend/src/env.ts), [`admin-frontend`](./apps/admin-frontend/src/env.ts).
+2. Register it in your Next.js app's `src/env.ts` file. All **env.ts** files: [`frontend`](../../apps/frontend/src/env.ts), [`admin-frontend`](../../apps/admin-frontend/src/env.ts) .
 
 ```typescript
 import { createEnv } from "@t3-oss/env-nextjs";

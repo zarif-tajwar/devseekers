@@ -10,7 +10,7 @@
       <a href="#run-the-dev-server-of-a-specific-app">Run the dev server of a specific app</a>
     </li>
     <li><a href="#ignore-a-specific-app-and-run-all-other-apps">Ignore a specific app and run all other apps</a></li>
-    <li><a href="#install-dependencies-of-a-specific-app-or-package-from-the-root directory">Install dependencies of a specific app or package from the root directory</a></li>
+    <li><a href="#install-dependencies-of-a-specific-app-or-package-from-the-root-directory">Install dependencies of a specific app or package from the root directory</a></li>
 </ul>
 
 <br/>
@@ -29,7 +29,7 @@ or
 turbo dev -F <name_of_the_app>
 ```
 
-For example, to only run the [admin-frontend](./apps/admin-frontend) app execute:
+For example, to only run the [admin-frontend](../apps/admin-frontend) app execute:
 
 ```sh
 pnpm dev -F admin-frontend
@@ -57,7 +57,7 @@ or
 turbo dev -F !<name_of_the_app> # Notice the exclamation mark
 ```
 
-For example, to ignore the frontend [frontend](./apps/frontend) app and run all the other apps execute:
+For example, to ignore the frontend [frontend](../apps/frontend) app and run all the other apps execute:
 
 ```sh
 pnpm dev -F !frontend # Notice the exclamation mark
