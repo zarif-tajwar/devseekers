@@ -4,6 +4,7 @@ import { AppController } from "./app.controller";
 import { getEnvValue, loadEnv } from "./config/env.config";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
+import { DatabaseModule } from "./database/database.module";
 
 @Module({
   imports: [
@@ -24,6 +25,13 @@ import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
           },
         };
       },
+    }),
+    DatabaseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        connectionString: getEnvValue(configService, "POSTGRES_URI"),
+      }),
     }),
   ],
   controllers: [AppController],
