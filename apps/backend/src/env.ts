@@ -8,4 +8,5 @@ export const envSchema = z.object({
   FRONTEND_URL: z.string().url(),
   PORT: z.coerce.number().optional(),
   ADMIN_FRONTEND_URL: z.string().url(),
+  REDIS_URI: z.string().url(),
 });
