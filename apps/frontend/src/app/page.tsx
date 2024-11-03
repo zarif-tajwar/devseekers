@@ -1,10 +1,12 @@
-import { Button } from "@repo/ui/components/core/button";
+import Link from "next/link";
 
 const RootPage = () => {
   return (
-    <div>
-      RootPage
-      <Button className="bg-blue-500">Click Me</Button>
+    <div className="flex flex-col space-y-4 justify-center items-center h-svh">
+      <h1 className="text-2xl font-bold tracking-tight">Root page</h1>
+      <Link href={"/sign-in"} className="underline underline-offset-2">
+        Go to sign in page
+      </Link>
     </div>
   );
 };
