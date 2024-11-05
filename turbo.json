@@ -10,7 +10,8 @@
     "ADMIN_FRONTEND_URL",
     "REDIS_URI",
     "POSTGRES_URI",
-    "SESSION_EXPIRY_TIME_IN_DAYS"
+    "SESSION_EXPIRY_TIME_IN_DAYS",
+    "NODE_ENV"
   ],
   "tasks": {
     "dev": {

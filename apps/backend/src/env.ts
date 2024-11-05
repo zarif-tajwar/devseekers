@@ -17,6 +17,7 @@ export const envSchema = z.object({
   REDIS_URI: z.string().url(),
   POSTGRES_URI: z.string().url(),
   SESSION_EXPIRY_TIME_IN_DAYS: z.coerce.number(),
+  NODE_ENV: z.enum(["development", "production"]).default("development"),
 });
 
 /**
@@ -31,4 +32,5 @@ export const extractEnvValues = () => ({
   REDIS_URI: process.env.REDIS_URI,
   POSTGRES_URI: process.env.POSTGRES_URI,
   SESSION_EXPIRY_TIME_IN_DAYS: process.env.SESSION_EXPIRY_TIME_IN_DAYS,
+  NODE_ENV: process.env.NODE_ENV,
 });
