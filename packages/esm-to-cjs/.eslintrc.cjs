@@ -1,12 +1,12 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  extends: ['@repo/eslint-config/base'],
+  extends: ["@repo/eslint-config/base"],
   parserOptions: {
-    project: 'tsconfig.json',
+    project: "tsconfig.json",
     tsconfigRootDir: __dirname,
-    sourceType: 'module',
+    sourceType: "module",
   },
   rules: {
-    'no-redeclare': 'off',
+    "no-redeclare": "off",
   },
 };
