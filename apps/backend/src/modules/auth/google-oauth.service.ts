@@ -68,7 +68,7 @@ export class GoogleOAuthService {
   /**
    * Validates google oauth props,
    * then allows users to login or register
-   * @returns {Session} session object
+   * @returns session token with expiry date
    */
   async authenticate({
     code,

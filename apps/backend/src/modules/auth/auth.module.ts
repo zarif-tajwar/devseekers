@@ -6,6 +6,7 @@ import { GoogleOAuthService } from "./google-oauth.service";
 import { AuthOriginService } from "./auth-origin.service";
 import { AccountService } from "./account.service";
 import { UserModule } from "../user/user.module";
+import { GithubOAuthService } from "./github-oauth.service";
 
 @Module({
   controllers: [AuthController, GoogleOAuthController],
@@ -14,6 +15,7 @@ import { UserModule } from "../user/user.module";
     GoogleOAuthService,
     AuthOriginService,
     AccountService,
+    GithubOAuthService,
   ],
   imports: [UserModule],
 })

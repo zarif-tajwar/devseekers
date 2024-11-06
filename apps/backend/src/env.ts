@@ -23,6 +23,9 @@ export const envSchema = z.object({
   // Google OAuth
   AUTH_GOOGLE_ID: z.string(),
   AUTH_GOOGLE_SECRET: z.string(),
+  // Github OAuth
+  AUTH_GITHUB_ID: z.string(),
+  AUTH_GITHUB_SECRET: z.string(),
 });
 
 /**
@@ -43,4 +46,7 @@ export const extractEnvValues = () => ({
   // Google OAuth
   AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
   AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
+  // Github OAuth
+  AUTH_GITHUB_ID: process.env.AUTH_GITHUB_ID,
+  AUTH_GITHUB_SECRET: process.env.AUTH_GITHUB_SECRET,
 });
