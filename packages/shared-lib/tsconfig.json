@@ -9,10 +9,7 @@
     "declarationMap": true,
     "emitDeclarationOnly": false,
     "noEmit": false,
-    "strict": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "strict": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
