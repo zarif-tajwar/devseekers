@@ -11,7 +11,10 @@
     "REDIS_URI",
     "POSTGRES_URI",
     "SESSION_EXPIRY_TIME_IN_DAYS",
-    "NODE_ENV"
+    "NODE_ENV",
+    "AUTH_GOOGLE_ID",
+    "AUTH_GOOGLE_SECRET",
+    "BACKEND_URL"
   ],
   "tasks": {
     "dev": {

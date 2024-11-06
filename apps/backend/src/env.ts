@@ -18,6 +18,11 @@ export const envSchema = z.object({
   POSTGRES_URI: z.string().url(),
   SESSION_EXPIRY_TIME_IN_DAYS: z.coerce.number(),
   NODE_ENV: z.enum(["development", "production"]).default("development"),
+  // Backend url
+  BACKEND_URL: z.string().url(),
+  // Google OAuth
+  AUTH_GOOGLE_ID: z.string(),
+  AUTH_GOOGLE_SECRET: z.string(),
 });
 
 /**
@@ -33,4 +38,9 @@ export const extractEnvValues = () => ({
   POSTGRES_URI: process.env.POSTGRES_URI,
   SESSION_EXPIRY_TIME_IN_DAYS: process.env.SESSION_EXPIRY_TIME_IN_DAYS,
   NODE_ENV: process.env.NODE_ENV,
+  // Backend url
+  BACKEND_URL: process.env.BACKEND_URL,
+  // Google OAuth
+  AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
+  AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
 });
