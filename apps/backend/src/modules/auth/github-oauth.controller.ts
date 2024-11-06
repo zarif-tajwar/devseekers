@@ -1,4 +1,3 @@
-import { getEnvValue } from "@/config/env.config";
 import { ZodPipe } from "@/config/zod-filter.config";
 import {
   Controller,
@@ -7,34 +6,33 @@ import {
   Query,
   Req,
   Res,
-  UseInterceptors,
 } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { getOAuthQueryDto } from "./dtos/get-oauth-query.dto";
 import { CookieOptions, Request, Response } from "express";
 import { AuthService } from "./auth.service";
-import { getOAuthQueryDto } from "./dtos/get-oauth-query.dto";
-import { googleCallbackCookiesDto } from "./dtos/google-callback-cookies.dto";
-import { GoogleOAuthService } from "./google-oauth.service";
-import { OAuthCallbackErrorsInterceptor } from "./interceptors/oauth-callback-errors.interceptor";
+import { GithubOAuthService } from "./github-oauth.service";
+import { ConfigService } from "@nestjs/config";
+import { getEnvValue } from "@/config/env.config";
+import { githubCallbackCookiesDto } from "./dtos/github-callback-cookies.dto";
 import { AuthOriginService } from "./auth-origin.service";
-import { OAuthCallbackResponse } from "./interfaces/oauth-callback-response.interface";
 import { AuthError } from "./errors/auth-error";
+import { OAuthCallbackResponse } from "./interfaces/oauth-callback-response.interface";
 
-@Controller("auth/google")
-export class GoogleOAuthController {
+@Controller("auth/github")
+export class GithubOAuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly authOriginService: AuthOriginService,
-    private readonly googleOAuthService: GoogleOAuthService,
+    private readonly githubOAuthService: GithubOAuthService,
     private readonly configService: ConfigService,
   ) {}
 
   /**
    * This endpoint will get called from our client
-   * to initiate google login flow
+   * to initiate github login flow
    */
   @Get()
-  initGoogleOAuth(
+  initGithubOAuth(
     @Req() req: Request,
     @Query(new ZodPipe(getOAuthQueryDto)) query: getOAuthQueryDto,
     @Res({ passthrough: true }) res: Response,
@@ -57,9 +55,8 @@ export class GoogleOAuthController {
       throw new ForbiddenException();
     }
 
-    // Get the necessary data for google oauth
-    const { authUrl, codeVerifier, state } =
-      this.googleOAuthService.getOAuthData();
+    // Get the necessary data for github oauth
+    const { authUrl, state } = this.githubOAuthService.getOAuthData();
 
     const isProduction =
       getEnvValue(this.configService, "NODE_ENV") === "production";
@@ -72,30 +69,28 @@ export class GoogleOAuthController {
     };
 
     // Place necessary  cookies
-    res.cookie("google_oauth_state", state, cookieOptions);
-    res.cookie("google_code_verifier", codeVerifier, cookieOptions);
+    res.cookie("github_oauth_state", state, cookieOptions);
     // Storing the redirect url to send the user back to the client/frontend later.
     res.cookie("redirectUrl", `${origin}${query.redirectUrl}`, cookieOptions);
     res.cookie("method", query.method, cookieOptions);
 
-    // Redirecting to google sign in flow
+    // Redirecting to github sign in flow
     res.redirect(authUrl.toString());
   }
 
   /**
-   * Google will call this endpoint automatically,
+   * Github will call this endpoint automatically,
    * passing the necessary properties in the query parameters.
    */
-  @UseInterceptors(OAuthCallbackErrorsInterceptor)
   @Get("callback")
-  async validateGoogleOAuthCallback(
+  async validateGithubOAuthCallback(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ) {
     /**
      * Validate original client's origin / redirect url
      */
-    const parsedOrigin = googleCallbackCookiesDto
+    const parsedOrigin = githubCallbackCookiesDto
       .pick({ redirectUrl: true })
       .safeParse(req.cookies);
 
@@ -111,20 +106,22 @@ export class GoogleOAuthController {
     (res as OAuthCallbackResponse).redirectUrl = parsedOrigin.data.redirectUrl;
 
     /**
-     * Validate other cookies
+     * Validate Cookies
      */
-    const cookieParser = googleCallbackCookiesDto
+    const parsedCookies = githubCallbackCookiesDto
       .omit({ redirectUrl: true })
       .safeParse(req.cookies);
 
-    if (cookieParser.error) {
-      throw new AuthError("RESTART");
+    if (parsedCookies.error) {
+      const errors = parsedCookies.error.format();
+
+      if (errors.github_oauth_state) throw new AuthError("RESTART");
+
+      throw new ForbiddenException();
     }
+    const cookies = parsedCookies.data;
 
-    const cookies = cookieParser.data;
-
-    const storedState = cookies.google_oauth_state;
-    const codeVerifier = cookies.google_code_verifier;
+    const storedState = cookies.github_oauth_state;
 
     /**
      * Validate query params
@@ -142,10 +139,9 @@ export class GoogleOAuthController {
 
     // Initiate authentication
     const { sessionToken, expiresAt } =
-      await this.googleOAuthService.authenticate({
+      await this.githubOAuthService.authenticate({
         code,
-        codeVerifier,
-        authMode: cookies.method,
+        authMode: "login",
       });
 
     // Create session cookie

@@ -33,8 +33,8 @@ export class GithubOAuthService {
     private readonly drizzleService: DrizzleService,
     private readonly authService: AuthService,
   ) {
-    const clientId = getEnvValue(configService, "AUTH_GOOGLE_ID");
-    const clientSecret = getEnvValue(configService, "AUTH_GOOGLE_SECRET");
+    const clientId = getEnvValue(configService, "AUTH_GITHUB_ID");
+    const clientSecret = getEnvValue(configService, "AUTH_GITHUB_SECRET");
     const redirectURI = `${getEnvValue(configService, "BACKEND_URL")}/auth/github/callback`;
 
     this.githubOAuth = new GitHub(clientId, clientSecret, redirectURI);

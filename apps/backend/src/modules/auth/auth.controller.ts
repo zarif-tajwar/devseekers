@@ -21,6 +21,19 @@ export class AuthController {
   ) {
     await this.authService.invalidateSession(req.sessionId, req.user.id);
     res.clearCookie("session");
+
+    const shouldRedirect = req.query.redirect;
+
+    if (shouldRedirect === "true") {
+      if (req.headers.referer) {
+        res.redirect(req.headers.referer);
+        return;
+      }
+      if (req.headers.origin) {
+        res.redirect(req.headers.origin);
+        return;
+      }
+    }
   }
 
   /**
