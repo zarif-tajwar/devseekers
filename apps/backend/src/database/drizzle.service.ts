@@ -8,7 +8,7 @@ import { CONNECTION_POOL } from "./database.module-definition";
  * Place Drizzle schema exports in this object
  * to make them usable for Drizzle's NoSQL-style query builder.
  */
-const allSchemas = {};
+export const allSchemas = {};
 
 @Injectable()
 export class DrizzleService {
