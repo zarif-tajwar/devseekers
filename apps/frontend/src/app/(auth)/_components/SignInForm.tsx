@@ -42,7 +42,7 @@ const SignInForm = () => {
           onClick={() => loginWithGithub()}
           disabled={disableEverything}
         >
-          {isGithubPending ? (
+          {isGithubPending || isGithubSuccess ? (
             <LuLoader2 size={40} className="animate-spin" />
           ) : (
             <FaGithub />
@@ -56,7 +56,7 @@ const SignInForm = () => {
           onClick={() => loginWithGoogle()}
           disabled={disableEverything}
         >
-          {isGooglePending ? (
+          {isGooglePending || isGoogleSuccess ? (
             <LuLoader2 size={40} className="animate-spin" />
           ) : (
             <FaGoogle />
