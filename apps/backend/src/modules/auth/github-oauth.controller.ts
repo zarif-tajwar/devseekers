@@ -74,8 +74,8 @@ export class GithubOAuthController {
     res.cookie("redirectUrl", `${origin}${query.redirectUrl}`, cookieOptions);
     res.cookie("method", query.method, cookieOptions);
 
-    // Redirecting to github sign in flow
-    res.redirect(authUrl.toString());
+    // Return the auth url that will allow the client to redirect the user to the sign in flow
+    return { authUrl: authUrl.toString() };
   }
 
   /**
