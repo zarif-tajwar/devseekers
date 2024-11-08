@@ -1,27 +1,32 @@
 "use client";
 import { Button } from "@repo/ui/components/core/button";
-import { FaGithub, FaGoogle } from "react-icons/fa";
 import Link from "next/link";
-import { useCallback } from "react";
-import { toast } from "@repo/ui/components/core/sonner";
-import { useState } from "react";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { LuLoader2 } from "react-icons/lu";
+import { useOAuthProvider } from "../_hooks/UseOAuthProvider";
 
 const SignUpForm = () => {
-  const [state, setState] = useState({
-    type: "",
-    loading: false,
+  const {
+    mutateAsync: registerWithGoogle,
+    isPending: isGooglePending,
+    isSuccess: isGoogleSuccess,
+  } = useOAuthProvider({
+    authMethod: "register",
+    provider: "google",
+    redirectUrl: "/users",
+  });
+  const {
+    mutateAsync: registerWithGithub,
+    isPending: isGithubPending,
+    isSuccess: isGithubSuccess,
+  } = useOAuthProvider({
+    authMethod: "register",
+    provider: "github",
+    redirectUrl: "/users",
   });
 
-  const handleSocialLogin = useCallback(async (type: "github" | "google") => {
-    setState({ type, loading: true });
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    setState({ type: "", loading: false });
-    toast("Sign in successful", {
-      icon: "🎉",
-      duration: 3000,
-    });
-  }, []);
+  const disableEverything =
+    isGooglePending || isGithubPending || isGoogleSuccess || isGithubSuccess;
 
   return (
     <div className="mx-auto sm:max-w-md  flex w-full flex-col justify-center space-y-6">
@@ -34,13 +39,10 @@ const SignUpForm = () => {
           type="button"
           variant={"outline"}
           className="w-full flex items-center gap-2 "
-          onClick={() => handleSocialLogin("github")}
-          disabled={
-            (state.type === "github" || state.type === "google") &&
-            state.loading
-          }
+          onClick={() => registerWithGithub()}
+          disabled={disableEverything}
         >
-          {state.type === "github" && state.loading ? (
+          {isGithubPending ? (
             <LuLoader2 size={40} className="animate-spin" />
           ) : (
             <FaGithub />
@@ -51,13 +53,10 @@ const SignUpForm = () => {
           type="button"
           variant={"outline"}
           className="w-full flex items-center gap-2 "
-          onClick={() => handleSocialLogin("google")}
-          disabled={
-            (state.type === "github" || state.type === "google") &&
-            state.loading
-          }
+          onClick={() => registerWithGoogle()}
+          disabled={isGooglePending}
         >
-          {state.type === "google" && state.loading ? (
+          {isGooglePending ? (
             <LuLoader2 size={40} className="animate-spin" />
           ) : (
             <FaGoogle />
