@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
+    "@radix-ui/react-slot": "^1.1.0",
     "@repo/shared-lib": "workspace:*",
     "@repo/ui": "workspace:*",
     "@t3-oss/env-nextjs": "^0.11.1",

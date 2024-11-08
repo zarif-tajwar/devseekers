@@ -229,6 +229,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.9.1
         version: 3.9.1(react-hook-form@7.53.1(react@18.3.1))
+      '@radix-ui/react-slot':
+        specifier: ^1.1.0
+        version: 1.1.0(@types/react@18.3.11)(react@18.3.1)
       '@repo/shared-lib':
         specifier: workspace:*
         version: link:../../packages/shared-lib
@@ -7756,6 +7759,12 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.2.61
 
+  '@radix-ui/react-compose-refs@1.1.0(@types/react@18.3.11)(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.11
+
   '@radix-ui/react-context@1.1.1(@types/react@18.2.61)(react@18.2.0)':
     dependencies:
       react: 18.2.0
@@ -7865,6 +7874,13 @@ snapshots:
       react: 18.2.0
     optionalDependencies:
       '@types/react': 18.2.61
+
+  '@radix-ui/react-slot@1.1.0(@types/react@18.3.11)(react@18.3.1)':
+    dependencies:
+      '@radix-ui/react-compose-refs': 1.1.0(@types/react@18.3.11)(react@18.3.1)
+      react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.11
 
   '@radix-ui/react-use-callback-ref@1.1.0(@types/react@18.2.61)(react@18.2.0)':
     dependencies:

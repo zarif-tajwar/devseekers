@@ -1,6 +1,5 @@
-import { env } from "@/env";
+import LogoutButton from "@/components/auth/LogoutButton";
 import { auth } from "@/lib/server/auth/auth";
-import { Button } from "@repo/ui/components/core/button";
 import Image from "next/image";
 
 type PageProps = {
@@ -37,13 +36,7 @@ const UserPage = async ({ params }: PageProps) => {
             </div>
           </div>
 
-          <Button asChild>
-            <a
-              href={`${env.NEXT_PUBLIC_BACKEND_URL}/auth/logout?redirect=true`}
-            >
-              Logout
-            </a>
-          </Button>
+          <LogoutButton>Logout</LogoutButton>
         </div>
       ) : (
         <div>{JSON.stringify(params)}</div>
