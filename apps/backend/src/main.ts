@@ -4,9 +4,12 @@ import { ZodFilter } from "./config/zod-filter.config";
 import { getEnvValue } from "./config/env.config";
 import { ConfigService } from "@nestjs/config";
 import { Logger } from "@nestjs/common";
+import cookieParser from "cookie-parser";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.use(cookieParser());
 
   const logger = new Logger("NestFactory");
   const configService = app.get(ConfigService);

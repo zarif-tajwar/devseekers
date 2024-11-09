@@ -2,7 +2,22 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["NEXT_PUBLIC_BACKEND_URL", "BLANK_ENV_VAR"],
+  "globalEnv": [
+    "NEXT_PUBLIC_BACKEND_URL",
+    "BLANK_ENV_VAR",
+    "FRONTEND_URL",
+    "PORT",
+    "ADMIN_FRONTEND_URL",
+    "REDIS_URI",
+    "POSTGRES_URI",
+    "SESSION_EXPIRY_TIME_IN_DAYS",
+    "NODE_ENV",
+    "AUTH_GOOGLE_ID",
+    "AUTH_GOOGLE_SECRET",
+    "BACKEND_URL",
+    "AUTH_GITHUB_ID",
+    "AUTH_GITHUB_SECRET"
+  ],
   "tasks": {
     "dev": {
       "cache": false,

@@ -5,6 +5,8 @@ import { getEnvValue, loadEnv } from "./config/env.config";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 import { DatabaseModule } from "./database/database.module";
+import { UserModule } from "./modules/user/user.module";
+import { AuthModule } from "./modules/auth/auth.module";
 
 @Module({
   imports: [
@@ -33,6 +35,8 @@ import { DatabaseModule } from "./database/database.module";
         connectionString: getEnvValue(configService, "POSTGRES_URI"),
       }),
     }),
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
