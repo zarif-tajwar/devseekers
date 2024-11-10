@@ -6,6 +6,7 @@ import {
   Query,
   Req,
   Res,
+  UseInterceptors,
 } from "@nestjs/common";
 import { getOAuthQueryDto } from "./dtos/get-oauth-query.dto";
 import { CookieOptions, Request, Response } from "express";
@@ -17,6 +18,7 @@ import { githubCallbackCookiesDto } from "./dtos/github-callback-cookies.dto";
 import { AuthOriginService } from "./auth-origin.service";
 import { AuthError } from "./errors/auth-error";
 import { OAuthCallbackResponse } from "./interfaces/oauth-callback-response.interface";
+import { OAuthCallbackErrorsInterceptor } from "./interceptors/oauth-callback-errors.interceptor";
 
 @Controller("auth/github")
 export class GithubOAuthController {
@@ -82,6 +84,7 @@ export class GithubOAuthController {
    * Github will call this endpoint automatically,
    * passing the necessary properties in the query parameters.
    */
+  @UseInterceptors(OAuthCallbackErrorsInterceptor)
   @Get("callback")
   async validateGithubOAuthCallback(
     @Req() req: Request,
