@@ -95,6 +95,7 @@ export class AuthService {
    */
   async validateSession(
     sessionToken: string,
+    disableAutoExtend: boolean = false,
   ): Promise<{ session: SessionEntity; isExpiryUpdated: boolean } | null> {
     // Generate the session key to query the db
     const sessionId = encodeHexLowerCase(
@@ -123,6 +124,7 @@ export class AuthService {
 
     // Extend expiration time when half the time has passed
     if (
+      !disableAutoExtend &&
       dayjs(currentTime).isAfter(
         dayjs(session.expiresAt).subtract(expiryTimeInDays / 2, "d"),
       )

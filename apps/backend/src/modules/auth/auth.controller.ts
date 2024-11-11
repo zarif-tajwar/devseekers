@@ -5,6 +5,7 @@ import { RequestWithUser } from "./interfaces/request-with-user.interface";
 import { Response } from "express";
 import { GetUser } from "./decorators/get-user.decorator";
 import { User } from "@repo/shared-lib/types/auth/user";
+import { DisableSessionAutoExtend } from "./decorators/disable-session-auto-extend.decorator";
 
 @Controller("auth")
 export class AuthController {
@@ -41,6 +42,7 @@ export class AuthController {
    * if the request is authorized
    */
   @Get("validate")
+  @DisableSessionAutoExtend(true)
   @UseGuards(AuthGuard)
   async validate(@GetUser() user: User) {
     return user;
