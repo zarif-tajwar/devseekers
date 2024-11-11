@@ -13,6 +13,12 @@ import { User } from "@repo/shared-lib/types/auth/user";
 import { DisableSessionAutoExtend } from "../decorators/disable-session-auto-extend.decorator";
 import { Reflector } from "@nestjs/core";
 
+/**
+ * AuthGuard checks for a valid user session and denies access if the user is not authenticated.
+ *
+ * Once authenticated, the guard attaches the authenticated user object and the session ID
+ * to the request object, so they can be accessed in later route handlers.
+ */
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
@@ -25,15 +31,18 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest() as Request;
     const response = context.switchToHttp().getResponse() as Response;
 
+    // Get session token from cookies
     const sessionToken = request.cookies.session as string | undefined;
 
     if (!sessionToken) throw new UnauthorizedException();
 
+    // Get session auto extension disable metadata
     const isAutoExtendDisabled = !!this.reflector.get(
       DisableSessionAutoExtend,
       context.getHandler(),
     );
 
+    // Validate the session token
     const auth = await this.authService.validateSession(
       sessionToken,
       isAutoExtendDisabled,
@@ -55,9 +64,11 @@ export class AuthGuard implements CanActivate {
       username: session.username,
     };
 
+    // Attach the request object with user object and session id
     (request as RequestWithUser).user = user;
     (request as RequestWithUser).sessionId = session.id;
 
+    // Replace the existing session token cookie with updated expiry time
     if (isExpiryUpdated) {
       response.cookie("session", sessionToken, {
         httpOnly: true,

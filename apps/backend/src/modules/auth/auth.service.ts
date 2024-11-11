@@ -50,7 +50,7 @@ export class AuthService {
     sessionToken: string,
     user: User,
   ): Promise<SessionEntity> {
-    // Hash the session id to store it to the db
+    // Hash the session token to store it to the db as session id
     const sessionId = encodeHexLowerCase(
       sha256(new TextEncoder().encode(sessionToken)),
     );
