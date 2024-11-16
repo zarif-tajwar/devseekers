@@ -12,7 +12,7 @@
       </ul>
     </li>
     <li><a href="#project-structure">Project Structure</a></li>
-    <li><a href="#useful-commands">Useful CLI Commands</a></li>
+    <li><a href="#useful-cli-commands">Useful CLI Commands</a></li>
     <li><a href="#usage-examples">Usage Examples</a></li>
 
 </ol>
