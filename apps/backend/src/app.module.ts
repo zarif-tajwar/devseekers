@@ -7,6 +7,8 @@ import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 import { DatabaseModule } from "./database/database.module";
 import { UserModule } from "./modules/user/user.module";
 import { AuthModule } from "./modules/auth/auth.module";
+import { APP_GUARD } from "@nestjs/core";
+import { OriginGuard } from "./modules/auth/guards/origin.guard";
 
 @Module({
   imports: [
@@ -39,6 +41,12 @@ import { AuthModule } from "./modules/auth/auth.module";
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: OriginGuard,
+    },
+  ],
 })
 export class AppModule {}
