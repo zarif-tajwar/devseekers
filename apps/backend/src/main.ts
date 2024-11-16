@@ -5,10 +5,12 @@ import { getEnvValue } from "./config/env.config";
 import { ConfigService } from "@nestjs/config";
 import { Logger } from "@nestjs/common";
 import cookieParser from "cookie-parser";
+import helmet from "helmet";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.use(helmet());
   app.use(cookieParser());
 
   const logger = new Logger("NestFactory");

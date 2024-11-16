@@ -31,6 +31,7 @@
     "cookie-parser": "^1.4.7",
     "dayjs": "^1.11.13",
     "drizzle-orm": "^0.36.0",
+    "helmet": "^8.0.0",
     "ioredis": "^5.4.1",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.0",
