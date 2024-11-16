@@ -5,6 +5,9 @@
 <ul>
     <li><a href="#add-and-use-environment-variables-in-nestjs-backend-with-typesafety">Add and use environment variables in Nest.js backend with typesafety</a></li>
     <li><a href="#use-a-zod-schema-as-a-dto">Use a zod schema as a DTO</a></li>
+    <li><a href="#protect-an-api-endpoint-with-user-authorization-and-get-the-user-info-object">Protect an API Endpoint with User Authorization and get the user info object</a></li>
+    <li><a href="#role-based-authorization">Role based Authorization</a></li>
+   
 </ul>
 
 <br/>
@@ -24,19 +27,35 @@ NEW_ENV_VAR=abc
 2. Register it in the backend [`src/env.ts`](../../apps/backend/src/env.ts) file.
 
 ```typescript
-import { z } from "zod";
-
-/**
- * Zod schema for validating env vars
- * NOTE: All env vars must be registered inside this object!!
- */
+// At first, register its zod validation type
 export const envSchema = z.object({
-  // ...other env vars
+  // ...other env var zod types
   NEW_ENV_VAR: z.string(),
+});
+
+// Then, register its value from process.env
+export const extractEnvValues = () => ({
+  // ...other env vars
+  NEW_ENV_VAR: process.env.NEW_ENV_VAR,
 });
 ```
 
-3. import `getEnvValue` function from [`@/env.config`](../../apps/backend/src/config/env.config.ts) and use it with a ConfigService. While writing the env **KEY** as a second argument in getEnvValue function, you will get auto suggestions.
+3. Register it in [`turbo.json`](../../turbo.json) **globalEnv** list:
+
+```json
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "globalDependencies": ["**/.env.*local", "**/.env"],
+  "globalEnv": [
+    // ...other env vars
+    "NEW_ENV_VAR"
+  ]
+  // ...
+}
+```
+
+4. import `getEnvValue` function from [`@/config/env.config`](../../apps/backend/src/config/env.config.ts) and use it with a ConfigService. While writing the env **KEY** as a second argument in getEnvValue function, you will get auto suggestions.
 
 ```typescript
 import { Injectable } from "@nestjs/common";
@@ -45,7 +64,7 @@ import { getEnvValue } from "@/config/env.config";
 
 @Injectable()
 export class NewService {
-  constructor(private configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) {}
 
   functionThatNeedsNewEnv() {
     const newEnvVar = getEnvValue(this.configService, "NEW_ENV_VAR");
@@ -89,6 +108,73 @@ export class AppController {
   @Post()
   greet(@Body(new ZodPipe(GreetDto)) body: GreetDto) {
     return this.appService.greet(body);
+  }
+}
+```
+
+### Protect an API Endpoint with User Authorization and get the user info object
+
+---
+
+[AuthGuard](../../apps/backend/src/modules/auth/guards/auth.guard.ts) should be used in controllers to do user authorization. It will only allow a user if a valid user session is found in request cookies. Otherwise, it will return a 401 unauthorized response.
+
+**Usage Example:**
+
+```typescript
+import { GetUser } from "@/modules/auth/decorators/get-user.decorator";
+import { AuthGuard } from "@/modules/auth/guards/auth.guard";
+import { RequestWithUser } from "@/modules/auth/interfaces/request-with-user.interface";
+import { Controller, Post, Req, UseGuards } from "@nestjs/common";
+import { User } from "@repo/shared-lib/types/auth/user";
+
+@Controller("posts")
+export class PostController {
+  constructor() {}
+
+  @UseGuards(AuthGuard)
+  @Post()
+  async createPostExample1(@Req() req: RequestWithUser) {
+    const user = req.user;
+    console.log(user);
+    // ... rest of the logic
+  }
+
+  @UseGuards(AuthGuard)
+  @Post()
+  // Uses @GetUser decorator to extract the user object from the request
+  async createPostExample2(@GetUser() user: User) {
+    console.log(user);
+    // ... rest of the logic
+  }
+}
+```
+
+### Role based Authorization
+
+---
+
+[RolesGuard](../../apps/backend/src/modules/auth/guards/roles.guard.ts) should be used with [@Roles decorator](../../apps/backend/src/modules/auth/decorators/roles.decorator.ts) in controllers to do role based auth. It will only allow a user if the user has atleast 1 required role. Otherwise, it will return a 403 forbidden response.
+
+**NOTE:** AuthGuard also must be registered to use RolesGuard.
+
+**Usage Example:**
+
+```typescript
+import { AuthGuard } from "@/modules/auth/guards/auth.guard";
+import { Controller, Delete, UseGuards } from "@nestjs/common";
+import { RolesGuard } from "@/modules/auth/guards/roles.guard";
+import { Roles } from "@/modules/auth/decorators/roles.decorator";
+
+@Controller("posts")
+export class PostController {
+  constructor() {}
+
+  // If the user doesn't have any of these roles, he won't be allowed!
+  @Roles(["admin", "moderator"])
+  @UseGuards(AuthGuard, RolesGuard)
+  @Delete(":id")
+  async deletePost() {
+    // ... rest of the logic
   }
 }
 ```

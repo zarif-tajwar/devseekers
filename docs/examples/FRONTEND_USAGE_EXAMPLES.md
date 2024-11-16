@@ -9,6 +9,7 @@
     <li><a href="#use-shadcn-cli-to-add-components-in-repoui">Use shadcn CLI to add components in @repo/ui</a></li>
     <li><a href="#create-a-shareable-zod-validator-in-reposhared-lib">Create a shareable zod validator in @repo/shared-lib</a></li>
     <li><a href="#add-and-use-environment-variables-in-nextjs-apps-with-typesafety">Add and use environment variables in Next.js apps with typesafety</a></li>
+    <li><a href="#verify-on-the-server-if-a-user-is-logged-in">Verify on the server if a user is logged in</a></li>
 </ul>
 
 <br/>
@@ -74,21 +75,7 @@ pnpm shadcn add <name_of_the_component>
 > [!IMPORTANT]
 > Make sure @repo/shared-lib dev server is running while you're actively developing inside the package
 
-**Follow the same pattern as [this example](#create-a-shareable-zod-validator-in-reposhared-lib).**
-
-### Add and use environment variables in Next.js apps with typesafety
-
----
-
-1. At first, add your env var in .env file.
-
-```env
-# ...other env vars
-
-NEW_ENV_VAR=abc
-```
-
-2. Register it in your Next.js app's `src/env.ts` file. All **env.ts** files: [`frontend`](./apps/frontend/src/env.ts), [`admin-frontend`](./apps/admin-frontend/src/env.ts).
+**Follow the same pattern as [this example](#create-a-shareable-ui-component-in-repoui).**
 
 <br/>
 
@@ -96,7 +83,7 @@ NEW_ENV_VAR=abc
 
 ---
 
-1.  Create the react component inside [`packages\ui\src\components`](./packages/ui/src/components) folder and export it.
+1.  Create the react component inside [`packages\ui\src\components`](../../packages/ui/src/components) folder and export it.
     <br/>
     **Example:**
 
@@ -172,10 +159,54 @@ export const env = createEnv({
 });
 ```
 
-3. Consume the env var in a file by importing `env` object from `src/env.ts`.
+3. Register them in [`turbo.json`](../../turbo.json) **globalEnv** list:
+
+```json
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "globalDependencies": ["**/.env.*local", "**/.env"],
+  "globalEnv": [
+    // ...other env vars
+    "NEW_ENV_VAR",
+    "NEXT_PUBLIC_NEW_ENV_VAR"
+  ]
+  // ...
+}
+```
+
+4. Consume the env var in a file by importing `env` object from `src/env.ts`.
 
 ```typescript
 import { env } from "@/env";
 
 console.log(env.NEW_ENV_VAR);
+```
+
+### Verify on the Server if a user is logged in
+
+---
+
+In this context `Server` respresents:
+
+- Server Components
+- Route Handlers
+- Server Actions/Functions
+
+**Usage Example:**
+
+```tsx
+import { auth } from "@/lib/server/auth/auth";
+import { redirect } from "next/navigation";
+import React from "react";
+
+const SomeProtectedPage = async () => {
+  const user = await auth();
+
+  if (!user) redirect("/sign-in");
+
+  return <div>User Email: {user.email}</div>;
+};
+
+export default SomeProtectedPage;
 ```
