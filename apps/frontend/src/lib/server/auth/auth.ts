@@ -2,6 +2,7 @@ import "server-only";
 import { env } from "@/env";
 import { cookies } from "next/headers";
 import { User } from "@repo/shared-lib/types/auth/user";
+import { cache } from "react";
 
 /**
  * Checks if the user is logged in. Returns the user information if they are authenticated, or null if they are not.
@@ -25,7 +26,7 @@ import { User } from "@repo/shared-lib/types/auth/user";
  *
  * @throws Logs an error to the console if the fetch request fails due to network issues or other errors.
  */
-export const auth = async (): Promise<null | User> => {
+export const auth = cache(async (): Promise<null | User> => {
   const cookiesStr = cookies().toString();
 
   const req = new Request(`${env.NEXT_PUBLIC_BACKEND_URL}/auth/validate`, {
@@ -43,4 +44,4 @@ export const auth = async (): Promise<null | User> => {
     console.error(`Auth Error: ${(error as Error).message}`);
     return null;
   }
-};
+});
