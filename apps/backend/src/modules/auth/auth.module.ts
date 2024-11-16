@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { AuthController } from "./auth.controller";
 import { GoogleOAuthController } from "./google-oauth.controller";
@@ -9,6 +9,7 @@ import { UserModule } from "../user/user.module";
 import { GithubOAuthService } from "./github-oauth.service";
 import { GithubOAuthController } from "./github-oauth.controller";
 
+@Global()
 @Module({
   controllers: [AuthController, GoogleOAuthController, GithubOAuthController],
   providers: [
@@ -19,5 +20,6 @@ import { GithubOAuthController } from "./github-oauth.controller";
     GithubOAuthService,
   ],
   imports: [UserModule],
+  exports: [AuthService, AuthOriginService],
 })
 export class AuthModule {}
