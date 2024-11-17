@@ -7,6 +7,7 @@
     <li><a href="#use-a-zod-schema-as-a-dto">Use a zod schema as a DTO</a></li>
     <li><a href="#protect-an-api-endpoint-with-user-authorization-and-get-the-user-info-object">Protect an API Endpoint with User Authorization and get the user info object</a></li>
     <li><a href="#role-based-authorization">Role based Authorization</a></li>
+    <li><a href="#create-a-database-table">Create a Database Table</a></li>
    
 </ul>
 
@@ -112,6 +113,8 @@ export class AppController {
 }
 ```
 
+<br/>
+
 ### Protect an API Endpoint with User Authorization and get the user info object
 
 ---
@@ -149,6 +152,8 @@ export class PostController {
 }
 ```
 
+<br/>
+
 ### Role based Authorization
 
 ---
@@ -177,4 +182,54 @@ export class PostController {
     // ... rest of the logic
   }
 }
+```
+
+<br/>
+
+### Create a Database Table
+
+---
+
+Our backend uses [Drizzle ORM](https://orm.drizzle.team/) to do database queries, generate tables and handle migrations. Heres an example showing how to generate a database table:
+
+1. Create a file with `.sql.ts` suffix. Example `my-new-table.sql.ts`.
+
+> [!IMPORTANT]
+> Drizzle schema files must end with `.sql.ts` in this project. Otherwise, drizzle-kit wont be able to detect it.
+
+2. Write your drizzle database schema in that file:
+
+```typescript
+import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+
+export const myNewTable = pgTable("my_new_table", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  someField: text("some_field").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+```
+
+3. After finishing writing your schema, execute the following command to generate migration files for it:
+
+```sh
+# If you're in root directory
+pnpm -F backend mig:generate
+
+or
+
+# If you're in apps/backend directory
+pnpm mig:generate
+```
+
+4. Execute the following command to apply the generated migration files to the database:
+
+```sh
+# If you're in root directory
+pnpm -F backend mig:run
+
+or
+
+# If you're in apps/backend directory
+pnpm mig:run
 ```
