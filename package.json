@@ -1,6 +1,6 @@
 {
   "name": "devseekers",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "",
   "author": "devseekers",
@@ -19,6 +19,8 @@
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "husky": "^9.1.6",
