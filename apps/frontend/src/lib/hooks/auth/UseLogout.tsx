@@ -2,7 +2,7 @@
 
 import { env } from "@/env";
 import { toast } from "@repo/ui/components/core/sonner";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 /**
@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
  * ```
  */
 export const useLogout = () => {
+  const qc = useQueryClient();
   const router = useRouter();
   return useMutation({
     mutationFn: async () => {
@@ -36,6 +37,7 @@ export const useLogout = () => {
       }
 
       // If success
+      qc.refetchQueries({ queryKey: ["session"] });
       router.refresh();
     },
     onError: (error) => {
