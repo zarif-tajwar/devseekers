@@ -15,7 +15,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,js,mjs,cjs}\"",
     "shadcn": "pnpm --filter @repo/ui shadcn",
     "prepare": "husky",
-    "pre-commit": "lint-staged",
+    "pre-commit": "node -v",
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {

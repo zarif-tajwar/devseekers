@@ -3,26 +3,32 @@ import { AppModule } from "./app.module";
 import { ZodFilter } from "./config/zod-filter.config";
 import { getEnvValue } from "./config/env.config";
 import { ConfigService } from "@nestjs/config";
+import { Logger } from "@nestjs/common";
+import cookieParser from "cookie-parser";
+import helmet from "helmet";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.use(helmet());
+  app.use(cookieParser());
+
+  const logger = new Logger("NestFactory");
   const configService = app.get(ConfigService);
 
   const FRONTEND_URL = getEnvValue(configService, "FRONTEND_URL");
   const ADMIN_FRONTEND_URL = getEnvValue(configService, "ADMIN_FRONTEND_URL");
+  const PORT = getEnvValue(configService, "PORT") || 3000;
 
   app.enableCors({
     origin: [FRONTEND_URL, ADMIN_FRONTEND_URL],
     credentials: true,
   });
 
-  const PORT = getEnvValue(configService, "PORT") || 3000;
-
   app.useGlobalFilters(new ZodFilter());
 
   await app.listen(PORT);
 
-  console.log(`🚀 Backend Server is Listening at http://localhost:${PORT} 🚀`);
+  logger.log(`🚀 Backend Server is Running at http://localhost:${PORT} 🚀`);
 }
 bootstrap();

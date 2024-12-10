@@ -1,5 +1,5 @@
 import { ConfigService, registerAs } from "@nestjs/config";
-import { envSchema } from "src/env";
+import { envSchema, extractEnvValues } from "src/env";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
 
@@ -8,7 +8,7 @@ import { fromZodError } from "zod-validation-error";
  * Throws an error if a required env var is missing
  */
 export const loadEnv = registerAs("envConfig", () => {
-  const parsed = envSchema.safeParse(process.env);
+  const parsed = envSchema.safeParse(extractEnvValues());
 
   if (parsed.error)
     throw new Error(
