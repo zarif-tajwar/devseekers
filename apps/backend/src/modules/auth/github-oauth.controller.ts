@@ -153,6 +153,7 @@ export class GithubOAuthController {
       sameSite: "lax",
       expires: new Date(expiresAt),
       secure: getEnvValue(this.configService, "NODE_ENV") === "production",
+      domain: this.authOriginService.wildCardDomain,
     });
 
     // Redirect the user back to the client

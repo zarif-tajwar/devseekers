@@ -1,4 +1,5 @@
 import { getEnvValue } from "@/config/env.config";
+import { extractDomain } from "@/lib/utils/url";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
@@ -8,6 +9,7 @@ export class AuthOriginService {
     string,
     { errorPageUrl: string; signInPageUrl: string; signUpPageUrl: string }
   >;
+  wildCardDomain: string;
 
   constructor(configService: ConfigService) {
     const FRONTEND_URL = getEnvValue(configService, "FRONTEND_URL");
@@ -24,6 +26,7 @@ export class AuthOriginService {
       signInPageUrl: "/login",
       signUpPageUrl: "/signup",
     });
+    this.wildCardDomain = `.${extractDomain(FRONTEND_URL)}`;
   }
 
   /**

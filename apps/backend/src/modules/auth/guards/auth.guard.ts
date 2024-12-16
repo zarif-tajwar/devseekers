@@ -12,6 +12,7 @@ import { RequestWithUser } from "../interfaces/request-with-user.interface";
 import { User } from "@repo/shared-lib/types/auth/user";
 import { DisableSessionAutoExtend } from "../decorators/disable-session-auto-extend.decorator";
 import { Reflector } from "@nestjs/core";
+import { AuthOriginService } from "../auth-origin.service";
 
 /**
  * AuthGuard checks for a valid user session and denies access if the user is not authenticated.
@@ -23,6 +24,7 @@ import { Reflector } from "@nestjs/core";
 export class AuthGuard implements CanActivate {
   constructor(
     private authService: AuthService,
+    private authOriginService: AuthOriginService,
     private configService: ConfigService,
     private reflector: Reflector,
   ) {}
@@ -75,6 +77,7 @@ export class AuthGuard implements CanActivate {
         sameSite: "lax",
         expires: new Date(session.expiresAt),
         secure: getEnvValue(this.configService, "NODE_ENV") === "production",
+        domain: this.authOriginService.wildCardDomain,
       });
     }
 
