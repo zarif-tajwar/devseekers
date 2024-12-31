@@ -1,6 +1,5 @@
 "use client";
 
-import { env } from "@/env";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "@repo/ui/components/core/sonner";
 import { useRouter } from "next/navigation";
@@ -46,7 +45,7 @@ export const useOAuthProvider = ({
   return useMutation({
     mutationFn: async () => {
       const req = new Request(
-        `${env.NEXT_PUBLIC_BACKEND_URL}/auth/${provider}?method=${authMethod}&redirectUrl=${redirectUrl}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/${provider}?method=${authMethod}&redirectUrl=${redirectUrl}`,
         // To include and accept cookies
         { credentials: "include" },
       );

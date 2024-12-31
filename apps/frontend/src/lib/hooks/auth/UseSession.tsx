@@ -1,6 +1,5 @@
 "use client";
 
-import { env } from "@/env";
 import { User } from "@repo/shared-lib/types/auth/user";
 import { useQuery, QueryStatus } from "@tanstack/react-query";
 import React, { createContext, useContext } from "react";
@@ -23,9 +22,12 @@ export const SessionProvider = ({
   const { data, status } = useQuery({
     queryKey: ["session"],
     queryFn: async () => {
-      const req = new Request(`${env.NEXT_PUBLIC_BACKEND_URL}/auth/validate`, {
-        credentials: "include",
-      });
+      const req = new Request(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/validate`,
+        {
+          credentials: "include",
+        },
+      );
 
       try {
         const res = await fetch(req);

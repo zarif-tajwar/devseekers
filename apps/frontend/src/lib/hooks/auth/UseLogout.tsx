@@ -1,6 +1,5 @@
 "use client";
 
-import { env } from "@/env";
 import { toast } from "@repo/ui/components/core/sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -26,7 +25,7 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: async () => {
       const req = new Request(
-        `${env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`,
         // To include and accept cookies
         { credentials: "include" },
       );

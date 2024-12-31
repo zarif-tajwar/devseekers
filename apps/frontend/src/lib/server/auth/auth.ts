@@ -1,5 +1,4 @@
 import "server-only";
-import { env } from "@/env";
 import { cookies } from "next/headers";
 import { User } from "@repo/shared-lib/types/auth/user";
 import { cache } from "react";
@@ -29,10 +28,13 @@ import { cache } from "react";
 export const auth = cache(async (): Promise<null | User> => {
   const cookiesStr = cookies().toString();
 
-  const req = new Request(`${env.NEXT_PUBLIC_BACKEND_URL}/auth/validate`, {
-    credentials: "include",
-    headers: { Cookie: cookiesStr },
-  });
+  const req = new Request(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/validate`,
+    {
+      credentials: "include",
+      headers: { Cookie: cookiesStr },
+    },
+  );
 
   try {
     const res = await fetch(req);
